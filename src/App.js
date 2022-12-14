@@ -3,6 +3,7 @@ import "./App.css";
 import RecipeCreate from "./RecipeCreate";
 import RecipeList from "./RecipeList";
 import RecipeData from "./RecipeData"
+import RecipeView from ".RecipeView"
 
 function App() {
   const [recipes, setRecipes] = useState(RecipeData);
@@ -13,17 +14,29 @@ function App() {
     setRecipes([...recipes, newRecipe])
   }
   
-  function DeleteRecipe(recipeIndex){
-    setRecipes(recipes.filter((recipe, index) => index !== recipeIndex));
-  }
-  
-  return (
-    <div className="App">
-      <header><h1>Delicious Food Recipes</h1></header>
-      <RecipeList recipes={recipes} deleteRecipe={DeleteRecipe} />
-      <RecipeCreate addRecipe={AddRecipe} />
-    </div>
+ const deleteRecipe = (indexToDelete) => {
+  setRecipes((currentRecipes) => 
+  currentRecipes.filter((_, index) => index !== indexToDelete)
   );
+ }
+  
+ return (
+  <div className="App">
+    <header>
+      <h1>Delicious Food Recipes</h1>
+    </header>
+    <RecipeList
+      recipes={recipes}
+      deleteRecipe={deleteRecipe}
+      setRecipes={setRecipes}
+    />
+    <RecipeCreate
+      recipes={recipes}
+      setRecipes={setRecipes}
+      deleteRecipe={deleteRecipe}
+    />
+  </div>
+);
 }
 
 export default App;

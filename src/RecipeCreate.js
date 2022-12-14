@@ -1,104 +1,80 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ addRecipe }) {
+function RecipeCreate({ addRecipe, setRecipes }) {
 
-  // TODO: When the form is submitted, a new recipe should be created, and the form contents cleared.
-  // TODO: Add the required input and textarea form elements.
-  // TODO: Add the required submit and change handlers
-  
-  const [name, setName] = useState("");
-  const [cuisine, setCuisine] = useState("")
-  const [photo, setPhoto] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [preparation, setPreparation] = useState("");
-  
-  const handleNameChange = (event) => {setName(event.target.value)};
-  const handleCuisineChange = (event) => {setCuisine(event.target.value)};
-  const handlePhotoChange = (event) => {setPhoto(event.target.value)};
-  const handleIngredientsChange = (event) => {setIngredients(event.target.value)};
-  const handlePreparationChange = (event) => {setPreparation(event.target.value)};
- 
-  
-  const handleSubmit = (event) => {
+  const initialFormState = {
+    name: "",
+    cuisine: "",
+    photo: "",
+    ingredients: "",
+    preparation: "",
+  };
+  const [formData, setFormData] = useState({ ...initialFormState });
+
+  const handleChange = ({ target }) => {
+    setFormData({ ...formData, [target.name]: target.value });
+  };
+
+  // The initial state stored in formData is created from this object. When the form is reset, a new object is created from this object.
+
+  const submitHandler = (event) => {
     event.preventDefault();
-    const newRecipe = {
-      name: name,
-      cuisine: cuisine, 
-      photo: photo, 
-      ingredients: ingredients, 
-      preparation: preparation,
-    };
-    addRecipe(newRecipe);
-    setName("");
-    setCuisine("");
-    setPhoto("");
-    setIngredients("");
-    setPreparation("");
-    console.log(newRecipe);
-  }
-  
+    setRecipes([...recipes, formData]);
+    setFormData({ ...initialFormState });
+    //Resetting the form to its initial state
+  };
+  console.log(recipes);
+  //   youre not clearing the create form after submitting
   return (
-    <form name="create">
+    <form name="create" onSubmit={submitHandler}>
       <table>
         <tbody>
           <tr>
             <td>
-                <input 
-                  id="name"
-                  required={true}
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  onChange={handleNameChange}
-                  value={name}
-                  size="10" />
+              <input
+                name="name"
+                type="text"
+                placeholder="Name"
+                onChange={handleChange}
+                value={formData.name}
+              />
             </td>
             <td>
-               <input 
-                 id="cuisine"
-                 required={true}
-                 type="text"
-                 name="cuisine"
-                 placeholder="Cuisine"
-                 onChange={handleCuisineChange}
-                 value={cuisine}
-                 size="10"/>
+              <input
+                name="cuisine"
+                type="text"
+                placeholder="cuisine"
+                onChange={handleChange}
+                value={formData.cuisine}
+              />
             </td>
             <td>
-                <input 
-                  id="photo"
-                  required={true}
-                  type="text"
-                  name="photo"
-                  placeholder="Photo"
-                  onChange={handlePhotoChange}
-                  value={photo}
-                  size="10" />
+              <input
+                name="photo"
+                type="text"
+                placeholder="photo"
+                onChange={handleChange}
+                value={formData.photo}
+              />
             </td>
             <td>
-                <textarea 
-                  id="ingredients"
-                  required={true}
-                  type="text"
-                  name="ingredients"
-                  placeholder="Ingredients"
-                  onChange={handleIngredientsChange}
-                  value={ingredients}
-                  size="10"/>
-            </td>
-             <td>
-                <textarea 
-                  id="preparation"
-                  required={true}
-                  type="text"
-                  name="preparation"
-                  placeholder="Preparation"
-                  onChange={handlePreparationChange}
-                  value={preparation}
-                  size="10"/>
+              <textarea
+                name="ingredients"
+                placeholder="ingredients"
+                onChange={handleChange}
+                value={formData.ingredients}
+              ></textarea>
             </td>
             <td>
-              <button type="submit" onClick={handleSubmit} >Create</button>
+              <textarea
+                name="preparation"
+                placeholder="preparation"
+                onChange={handleChange}
+                value={formData.preparation}
+              ></textarea>
+            </td>
+            <td>
+              <button type="submit">Create</button>
             </td>
           </tr>
         </tbody>

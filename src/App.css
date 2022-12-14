@@ -36,7 +36,11 @@ td {
   padding: 10px;
   text-align: center;
 }
-
+td img {
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
+}
 /* table */
 
 table {

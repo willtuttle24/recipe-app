@@ -1,6 +1,6 @@
 import React from "react";
+import RecipeData from "./RecipeData";
 import RecipeView from "./RecipeView";
-
 function RecipeList({ recipes, deleteRecipe }) {
   
   // TODO: Display the list of recipes using the structure of table that is provided.
@@ -20,17 +20,18 @@ function RecipeList({ recipes, deleteRecipe }) {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
-        {recipes.map((recipe, index) => (
-          <RecipeView
-            recipe={recipe}
-            deleteRecipe={() => deleteRecipe(index)}
-            key={index} />
-            ))}
+        <tbody className="tbody">
+          {recipes.map((recipe, index) => (
+            <RecipeView
+              deleteRecipe={() => deleteRecipe(index)}
+              key={index}
+              recipe={recipe}
+            />
+          ))}
         </tbody>
       </table>
     </div>
   );
 }
-
+//deleteRecipe
 export default RecipeList;
