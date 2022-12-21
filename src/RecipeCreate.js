@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function RecipeCreate({ addRecipe, setRecipes }) {
+function RecipeCreate({ recipes, setRecipes }) {
 
   const initialFormState = {
     name: "",
